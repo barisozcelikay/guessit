@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guessit/mainmenu_page.dart';
 import 'guessit_page.dart';
 
 void main() {
@@ -13,6 +12,8 @@ class GuessIt extends StatelessWidget {
         theme: ThemeData.dark().copyWith(
             scaffoldBackgroundColor: Color(0XFF0A0D22),
             primaryColor: Color(0XFF0A0D22)),
-        home: MainMenu());
+        home: GuessItPage(
+          title: "Guess IT",
+        ));
   }
 }
