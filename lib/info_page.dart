@@ -19,9 +19,7 @@ class InfoPage extends StatelessWidget {
             SizedBox(
               height: 40.0,
             ),
-            Container(
-              padding: EdgeInsets.only(right: 10.0),
-              width: double.infinity,
+            Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
