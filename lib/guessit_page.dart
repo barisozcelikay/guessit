@@ -158,8 +158,8 @@ class _GuessItPageState extends State<GuessItPage> {
           ),
         ],
       ),
-      body: Center(
-        child: SafeArea(
+      body: SafeArea(
+        child: Center(
           child: Column(
             children: [
               Expanded(

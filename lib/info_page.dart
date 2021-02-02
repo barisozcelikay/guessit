@@ -7,8 +7,8 @@ class InfoPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("About"),
       ),
-      body: Center(
-        child: SafeArea(
+      body: SafeArea(
+        child: Center(
           child: Column(
             children: [
               Expanded(
