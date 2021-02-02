@@ -227,7 +227,8 @@ class _GuessItPageState extends State<GuessItPage> {
                   ),
                 ),
               ),
-              Flexible(
+              Expanded(
+                flex: 2,
                 child: Column(
                   children: [
                     Text(
@@ -260,158 +261,166 @@ class _GuessItPageState extends State<GuessItPage> {
                             },
                           ),
                         )),
-                    Wrap(
-                      runSpacing: 40,
+                    Table(
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      defaultColumnWidth: FlexColumnWidth(1),
                       children: [
-                        RoundNumButton(
-                          num: 0,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 0);
-                              }
-                            });
-                          },
+                        TableRow(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(12.5),
+                              child: RoundNumButton(
+                                num: 0,
+                                onPress: () {
+                                  setState(() {
+                                    if (emptySlot() < 4) {
+                                      int slot = emptySlot();
+                                      addNumber(empty_place: slot, num: 0);
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(12.5),
+                              child: RoundNumButton(
+                                num: 1,
+                                onPress: () {
+                                  setState(() {
+                                    if (emptySlot() < 4) {
+                                      int slot = emptySlot();
+                                      addNumber(empty_place: slot, num: 1);
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(12.5),
+                              child: RoundNumButton(
+                                num: 2,
+                                onPress: () {
+                                  setState(() {
+                                    if (emptySlot() < 4) {
+                                      int slot = emptySlot();
+                                      addNumber(empty_place: slot, num: 2);
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(12.5),
+                              child: RoundNumButton(
+                                num: 3,
+                                onPress: () {
+                                  setState(() {
+                                    if (emptySlot() < 4) {
+                                      int slot = emptySlot();
+                                      addNumber(empty_place: slot, num: 3);
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(12.5),
+                              child: RoundNumButton(
+                                num: 4,
+                                onPress: () {
+                                  setState(() {
+                                    if (emptySlot() < 4) {
+                                      int slot = emptySlot();
+                                      addNumber(empty_place: slot, num: 4);
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RoundNumButton(
-                          num: 1,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 1);
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RoundNumButton(
-                          num: 2,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 2);
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RoundNumButton(
-                          num: 3,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 3);
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RoundNumButton(
-                          num: 4,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 4);
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RoundNumButton(
-                          num: 5,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 5);
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RoundNumButton(
-                          num: 6,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 6);
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RoundNumButton(
-                          num: 7,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 7);
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RoundNumButton(
-                          num: 8,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 8);
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RoundNumButton(
-                          num: 9,
-                          onPress: () {
-                            setState(() {
-                              if (emptySlot() < 4) {
-                                int slot = emptySlot();
-                                addNumber(empty_place: slot, num: 9);
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
+                        TableRow(children: [
+                          Padding(
+                            padding: EdgeInsets.all(12.5),
+                            child: RoundNumButton(
+                              num: 5,
+                              onPress: () {
+                                setState(() {
+                                  if (emptySlot() < 4) {
+                                    int slot = emptySlot();
+                                    addNumber(empty_place: slot, num: 5);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(12.5),
+                            child: RoundNumButton(
+                              num: 6,
+                              onPress: () {
+                                setState(() {
+                                  if (emptySlot() < 4) {
+                                    int slot = emptySlot();
+                                    addNumber(empty_place: slot, num: 6);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(12.5),
+                            child: RoundNumButton(
+                              num: 7,
+                              onPress: () {
+                                setState(() {
+                                  if (emptySlot() < 4) {
+                                    int slot = emptySlot();
+                                    addNumber(empty_place: slot, num: 7);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(12.5),
+                            child: RoundNumButton(
+                              num: 8,
+                              onPress: () {
+                                setState(() {
+                                  if (emptySlot() < 4) {
+                                    int slot = emptySlot();
+                                    addNumber(empty_place: slot, num: 8);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(12.5),
+                            child: RoundNumButton(
+                              num: 9,
+                              onPress: () {
+                                setState(() {
+                                  if (emptySlot() < 4) {
+                                    int slot = emptySlot();
+                                    addNumber(empty_place: slot, num: 9);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ]),
                       ],
                     ),
                   ],
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(40),
+                margin: EdgeInsets.all(20),
                 width: double.infinity,
-                height: 70,
+                height: 50,
                 child: RaisedButton(
                   onPressed: () {
                     setState(() {

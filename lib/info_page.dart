@@ -6,6 +6,7 @@ class InfoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("About"),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Center(
