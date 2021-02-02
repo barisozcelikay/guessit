@@ -10,8 +10,9 @@ class GuessIt extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData.dark().copyWith(
-            scaffoldBackgroundColor: Color(0XFF0A0D22),
-            primaryColor: Color(0XFF0A0D22)),
+          scaffoldBackgroundColor: Color.fromARGB(255, 34, 34, 34),
+          primaryColor: Color.fromARGB(255, 21, 21, 21),
+        ),
         home: GuessItPage(
           title: "Guess IT",
         ));

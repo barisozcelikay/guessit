@@ -7,6 +7,7 @@ import 'package:guessit/info_page.dart';
 import 'package:guessit/result.dart';
 import 'package:guessit/reusablenum_card.dart';
 import 'constants.dart';
+import 'customalert.dart';
 import 'roundnumbutton.dart';
 import 'result.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -40,12 +41,15 @@ class _GuessItPageState extends State<GuessItPage> {
   void addNumber({int empty_place, int num}) {
     // bulduğu boş slotu dolduruyo
     if (empty_place == 0 && num == 0) {
-      Alert(
-        context: context,
-        type: AlertType.error,
-        title: "SAME NUMBERS",
-        desc: "4 DIGITS NUMBER DO NOT START WITH",
-      ).show();
+      CustomAlert cstdial = CustomAlert('You cannot start the guess with 0.',
+          'Error', 'Understand', this.context);
+
+      showDialog(
+        context: this.context,
+        builder: (BuildContext context) {
+          return cstdial.dialog;
+        },
+      );
     } else {
       mainNums[empty_place] = num.toString();
     }
@@ -57,11 +61,15 @@ class _GuessItPageState extends State<GuessItPage> {
     if (isgamefinnished == true) {
       resulta.clear();
       com = Computers_Num().random();
-      Alert(
-        context: context,
-        type: AlertType.success,
-        title: "YOU WIN",
-      ).show();
+      CustomAlert cstdial =
+          CustomAlert('You win!.', 'Info', 'OK', this.context);
+
+      showDialog(
+        context: this.context,
+        builder: (BuildContext context) {
+          return cstdial.dialog;
+        },
+      );
       result = " ";
       mainNums = [" ", " ", " ", " "];
       isgamefinnished = false;
@@ -76,12 +84,15 @@ class _GuessItPageState extends State<GuessItPage> {
       List<int> inp_digits = inp.map(int.parse).toList();
 
       if (Computers_Num().inputchecker(inp) == false) {
-        Alert(
-          context: context,
-          type: AlertType.error,
-          title: "SAME NUMBERS",
-          desc: "You Entered Same Numbers.",
-        ).show();
+        CustomAlert cstdial = CustomAlert(
+            'You entered same numbers.', 'Warning', 'Understand', this.context);
+
+        showDialog(
+          context: this.context,
+          builder: (BuildContext context) {
+            return cstdial.dialog;
+          },
+        );
       } else {
         for (int i = 0; i < inp_digits.length; i++) {
           for (int j = 0; j < inp_digits.length; j++) {
@@ -122,10 +133,22 @@ class _GuessItPageState extends State<GuessItPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           widget.title,
         ),
         actions: [
+          IconButton(
+            icon: Icon(
+              Icons.history,
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HistoryPage(resulta)));
+            },
+          ),
           IconButton(
             icon: Icon(Icons.info_outline),
             onPressed: () {
@@ -136,289 +159,287 @@ class _GuessItPageState extends State<GuessItPage> {
         ],
       ),
       body: Center(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 20.0),
-              child: IconButton(
-                icon: Icon(
-                  Icons.history,
-                  size: 30.0,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HistoryPage(resulta)));
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                  top: 50.0, bottom: 20.0, left: 10.0, right: 10.0),
-              height: 130.0,
-              width: double.infinity,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                      child: ReusableNumCard(
-                    colour: kActiveCardColour,
-                    cardChild: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          mainNums[0],
-                          textAlign: TextAlign.center,
-                          style: kLabelTextStyle,
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  //  color: Colors.green,
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: 120),
+                          child: ReusableNumCard(
+                              colour: kActiveCardColour,
+                              cardChild: Center(
+                                child: Text(
+                                  mainNums[0],
+                                  textAlign: TextAlign.center,
+                                  style: kLabelTextStyle,
+                                ),
+                              )),
                         ),
-                      ],
-                    ),
-                  )),
-                  Expanded(
-                      child: ReusableNumCard(
-                    colour: kActiveCardColour,
-                    cardChild: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          mainNums[1],
-                          textAlign: TextAlign.center,
-                          style: kLabelTextStyle,
-                        ),
-                      ],
-                    ),
-                  )),
-                  Expanded(
-                      child: ReusableNumCard(
-                    colour: kActiveCardColour,
-                    cardChild: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          mainNums[2],
-                          textAlign: TextAlign.center,
-                          style: kLabelTextStyle,
-                        ),
-                      ],
-                    ),
-                  )),
-                  Expanded(
-                      child: ReusableNumCard(
-                    colour: kActiveCardColour,
-                    cardChild: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          mainNums[3],
-                          textAlign: TextAlign.center,
-                          style: kLabelTextStyle,
-                        ),
-                      ],
-                    ),
-                  )),
-                ],
-              ),
-            ),
-            Expanded(
-                child: Text(
-              (() {
-                if (result == null) {
-                  return " ";
-                } else {
-                  return result;
-                }
-              }()),
-              style: kResultTextStyle,
-            )),
-            Expanded(
-              child: Container(
-                  width: 60,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-                  child: Center(
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        size: 32,
                       ),
-                      onPressed: () {
-                        setState(() {
-                          if (mainNums.isEmpty == false) {
-                            mainNums = [" ", " ", " ", " "];
-                          }
-                        });
-                      },
-                    ),
-                  )),
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 0,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 0);
-                        }
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 1,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 1);
-                        }
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 2,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 2);
-                        }
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 3,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 3);
-                        }
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 4,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 4);
-                        }
-                      });
-                    },
-                  )),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 5,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 5);
-                        }
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 6,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 6);
-                        }
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 7,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 7);
-                        }
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 8,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 8);
-                        }
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RoundNumButton(
-                    num: 9,
-                    onPress: () {
-                      setState(() {
-                        if (emptySlot() < 4) {
-                          int slot = emptySlot();
-                          addNumber(empty_place: slot, num: 9);
-                        }
-                      });
-                    },
-                  )),
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  result = check_numbers(com, mainNums);
-                  resulta.addFirst(Result(mainNums, result));
-
-                  //  HistoryPage(resulta);
-                });
-                if (result != "You win") {
-                  mainNums = [
-                    " ",
-                    " ",
-                    " ",
-                    " "
-                  ]; // burda eğer hepsini bilmediği zaman baştaki 4 numarayı boşluk atıyorum
-                } else if (result == "You win") {
-                  isGameFinnished = true;
-                  com = restart(isGameFinnished);
-                  print(com);
-                }
-              },
-              child: Container(
-                margin: EdgeInsets.only(top: 30.0),
-                padding: EdgeInsets.only(top: 10.0),
-                height: 50.0,
-                width: double.infinity,
-                color: Colors.red,
-                child: Text(
-                  "GUESS IT",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20.0),
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: 120),
+                          child: ReusableNumCard(
+                              colour: kActiveCardColour,
+                              cardChild: Center(
+                                child: Text(
+                                  mainNums[1],
+                                  textAlign: TextAlign.center,
+                                  style: kLabelTextStyle,
+                                ),
+                              )),
+                        ),
+                      ),
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: 120),
+                          child: ReusableNumCard(
+                              colour: kActiveCardColour,
+                              cardChild: Center(
+                                child: Text(
+                                  mainNums[2],
+                                  textAlign: TextAlign.center,
+                                  style: kLabelTextStyle,
+                                ),
+                              )),
+                        ),
+                      ),
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: 120),
+                          child: ReusableNumCard(
+                              colour: kActiveCardColour,
+                              cardChild: Center(
+                                child: Text(
+                                  mainNums[3],
+                                  textAlign: TextAlign.center,
+                                  style: kLabelTextStyle,
+                                ),
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            )
-          ],
+              Flexible(
+                child: Column(
+                  children: [
+                    Text(
+                      (() {
+                        if (result == null) {
+                          return " ";
+                        } else {
+                          return result;
+                        }
+                      }()),
+                      style: kResultTextStyle,
+                    ),
+                    Container(
+                        margin: EdgeInsets.fromLTRB(0, 20, 0, 40),
+                        width: 60,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.red),
+                        child: Center(
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.delete,
+                              size: 32,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                if (mainNums.isEmpty == false) {
+                                  mainNums = [" ", " ", " ", " "];
+                                }
+                              });
+                            },
+                          ),
+                        )),
+                    Wrap(
+                      runSpacing: 40,
+                      children: [
+                        RoundNumButton(
+                          num: 0,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 0);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RoundNumButton(
+                          num: 1,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 1);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RoundNumButton(
+                          num: 2,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 2);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RoundNumButton(
+                          num: 3,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 3);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RoundNumButton(
+                          num: 4,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 4);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RoundNumButton(
+                          num: 5,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 5);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RoundNumButton(
+                          num: 6,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 6);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RoundNumButton(
+                          num: 7,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 7);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RoundNumButton(
+                          num: 8,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 8);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RoundNumButton(
+                          num: 9,
+                          onPress: () {
+                            setState(() {
+                              if (emptySlot() < 4) {
+                                int slot = emptySlot();
+                                addNumber(empty_place: slot, num: 9);
+                              }
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(40),
+                width: double.infinity,
+                height: 70,
+                child: RaisedButton(
+                  onPressed: () {
+                    setState(() {
+                      result = check_numbers(com, mainNums);
+                      resulta.addFirst(Result(mainNums, result));
+                    });
+                    if (result != "You win") {
+                      mainNums = [
+                        " ",
+                        " ",
+                        " ",
+                        " "
+                      ]; // burda eğer hepsini bilmediği zaman baştaki 4 numarayı boşluk atıyorum
+                    } else if (result == "You win") {
+                      isGameFinnished = true;
+                      com = restart(isGameFinnished);
+                      print(com);
+                    }
+                  },
+                  color: Colors.blueGrey,
+                  child: Text(
+                    'GUESS IT',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

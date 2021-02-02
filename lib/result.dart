@@ -1,5 +1,4 @@
 // ignore: must_be_immutable
-import 'dart:collection';
 
 class Result {
   List<String> input;
@@ -13,6 +12,6 @@ class Result {
   }
   @override
   String toString() {
-    return 'Guessed:\t$stringList - Result:\t$result'; // -1 in çok yakın onu düzeltmeyi denedim de
+    return 'Guessed:\t$stringList - Result:\t$result';
   }
 }
